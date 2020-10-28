@@ -1,5 +1,8 @@
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RVTR.Lodging.ObjectModel.Interfaces;
@@ -90,13 +93,26 @@ namespace RVTR.Lodging.WebApi.Controllers
     /// <param name="rental"></param>
     /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status202Accepted)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Post(RentalModel rental)
     {
       _logger.LogDebug("Adding a rental...");
-      await _unitOfWork.Rental.InsertAsync(rental);
-      await _unitOfWork.CommitAsync();
-      _logger.LogInformation($"Successfully added the rental {rental}.");
-      return Accepted(rental);
+      //Checks to see if rental obj is valid. Returns a bad request if invalid, otherwise inserts it into the db.
+      var validationResults = rental.Validate(new ValidationContext(rental));
+      if (validationResults != null || validationResults.Count() > 0) //If rental obj is invalid...
+      {
+        _logger.LogInformation($"Invalid rental '{rental}'.");
+        return BadRequest(rental);                                    //Return bad request
+      }
+      else
+      {
+        _logger.LogInformation($"Successfully added the rental {rental}.");
+        await _unitOfWork.Rental.InsertAsync(rental);
+        await _unitOfWork.CommitAsync();
+
+        return Accepted(rental);
+      }
     }
 
     /// <summary>
@@ -105,13 +121,34 @@ namespace RVTR.Lodging.WebApi.Controllers
     /// <param name="rental"></param>
     /// <returns></returns>
     [HttpPut]
+    [ProducesResponseType(StatusCodes.Status202Accepted)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Put(RentalModel rental)
     {
       _logger.LogDebug("Updating a rental...");
-      _unitOfWork.Rental.Update(rental);
-      await _unitOfWork.CommitAsync();
-      _logger.LogInformation($"Successfully updated the rental {rental}.");
-      return Accepted(rental);
+      //Checks to see if rental obj is valid. Returns a bad request if invalid, otherwise updates the db entry.
+      var validationResults = rental.Validate(new ValidationContext(rental));
+      if (validationResults != null || validationResults.Count() > 0)
+      {
+        _logger.LogInformation($"Failed to update rental due to validation.");
+        return BadRequest(rental);           //Returns bad request if invalid input given
+      }
+      else
+      {
+        try
+        {
+          _unitOfWork.Rental.Update(rental); //Updates the entry
+          await _unitOfWork.CommitAsync();   //Saves changes to the context
+          _logger.LogInformation($"Successfully updated the rental {rental}.");
+          return Accepted(rental);           //Returns 202 ok code
+        }
+        catch
+        {
+          _logger.LogInformation($"Failed to update rental - invalid rental given.");
+          return NotFound(rental);          //Returns 404 if entry not found in db
+        }
+      }
     }
   }
 }

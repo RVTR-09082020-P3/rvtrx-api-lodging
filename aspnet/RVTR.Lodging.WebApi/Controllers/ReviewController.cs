@@ -1,5 +1,8 @@
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RVTR.Lodging.ObjectModel.Interfaces;
@@ -90,13 +93,26 @@ namespace RVTR.Lodging.WebApi.Controllers
     /// <param name="review"></param>
     /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status202Accepted)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Post(ReviewModel review)
     {
       _logger.LogDebug("Adding a review...");
-      await _unitOfWork.Review.InsertAsync(review);
-      await _unitOfWork.CommitAsync();
-      _logger.LogInformation($"Successfully added the review {review}.");
-      return Accepted(review);
+      //Checks to see if review obj is valid. Returns a bad request if invalid, otherwise inserts it into the db.
+      var validationResults = review.Validate(new ValidationContext(review));
+      if (validationResults != null || validationResults.Count() > 0)
+      {
+        _logger.LogInformation("Failed to add review due to validation.");
+        return BadRequest(review);
+      }
+      else
+      {
+        _logger.LogInformation($"Successfully added the review {review}.");
+        await _unitOfWork.Review.InsertAsync(review);
+        await _unitOfWork.CommitAsync();
+
+        return Accepted(review);
+      }
     }
 
     /// <summary>
@@ -105,13 +121,34 @@ namespace RVTR.Lodging.WebApi.Controllers
     /// <param name="review"></param>
     /// <returns></returns>
     [HttpPut]
+    [ProducesResponseType(StatusCodes.Status202Accepted)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Put(ReviewModel review)
     {
       _logger.LogDebug("Updating a review...");
-      _unitOfWork.Review.Update(review);
-      await _unitOfWork.CommitAsync();
-      _logger.LogInformation($"Successfully updated the review {review}.");
-      return Accepted(review);
+      //Checks to see if review obj is valid. Returns a bad request if invalid, otherwise inserts it into the db.
+      var validationResults = review.Validate(new ValidationContext(review));
+      if (validationResults != null || validationResults.Count() > 0)
+      {
+        _logger.LogInformation("Failed to update review due to validation.");
+        return BadRequest(review);
+      }
+      else
+      {
+        try
+        {
+          _unitOfWork.Review.Update(review);
+          await _unitOfWork.CommitAsync();
+          _logger.LogInformation($"Successfully updated review {review}.");
+          return Accepted(review);
+        }
+        catch
+        {
+          _logger.LogInformation($"Failed to update review - invalid review given.");
+          return NotFound(review);
+        }
+      }
     }
   }
 }
