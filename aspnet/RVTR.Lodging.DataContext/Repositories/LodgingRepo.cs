@@ -15,23 +15,25 @@ namespace RVTR.Lodging.DataContext.Repositories
     { }
 
     /// <summary>
-    /// This Method will select all lodgings, including their Rentals, Location, and Locations Address
+    /// This Method will select all lodgings, including their Rentals, Location,Locations Address, and reviews
     /// </summary>
     public override async Task<IEnumerable<LodgingModel>> SelectAsync() => await Db
       .Include(r => r.Rentals)
         .ThenInclude(ru => ru.Unit)
       .Include(l => l.Location)
         .ThenInclude(a => a.Address)
+      .Include(a => a.Reviews)
       .ToListAsync();
 
     /// <summary>
-    /// This method will get a Lodging with the given Id and will include its Location and the locations address
+    /// This method will get a Lodging with the given Id and will include its Location, the locations address, and reviews
     /// </summary>
     public override async Task<LodgingModel> SelectAsync(int id) => await Db
       .Include(r => r.Rentals)
         .ThenInclude(ru => ru.Unit)
       .Include(l => l.Location)
         .ThenInclude(a => a.Address)
+      .Include(a => a.Reviews)
       .FirstOrDefaultAsync(x => x.Id == id);
 
     /// <summary>
