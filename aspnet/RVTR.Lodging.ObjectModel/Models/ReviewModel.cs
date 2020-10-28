@@ -13,6 +13,8 @@ namespace RVTR.Lodging.ObjectModel.Models
 
     public int AccountId { get; set; }
 
+    public string Name { get; set; }
+
     public string Comment { get; set; }
 
     public DateTime DateCreated { get; set; }
