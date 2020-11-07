@@ -12,7 +12,7 @@ services:
     depends_on:
       - data
     environment:
-      ConnectionStrings__pgsql: 'Host=data;Database=LodgingData;Username=postgres;Password=LodgingData@2020;'
+      ConnectionStrings__pgsql: 'Host=data;Database=LodgingData;Username=admin;Password=admin;'
       ConnectionStrings__zipkin: 'http://trace:9411/'
     networks:
       - locally
@@ -21,10 +21,13 @@ services:
 
   data:
     environment:
-      POSTGRES_PASSWORD: LodgingData@2020
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
     image: postgres:12
     networks:
       - locally
+    ports:
+      - 5433:5432
 
   trace:
     image: openzipkin/zipkin-slim
