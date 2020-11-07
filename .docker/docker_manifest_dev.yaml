@@ -1,5 +1,5 @@
 # from repo root:
-# docker-compose -f .docker/docker_manifest.yaml -p lodging up --build
+# docker-compose -f .docker/docker_manifest_dev.yaml -p lodging_dev up --build
 
 networks:
   locally:
@@ -21,10 +21,13 @@ services:
 
   data:
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: LodgingData@2020
     image: postgres:12
     networks:
       - locally
+    ports:
+      - 5434:5432
 
   trace:
     image: openzipkin/zipkin-slim
