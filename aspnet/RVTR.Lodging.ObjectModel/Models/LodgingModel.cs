@@ -43,6 +43,12 @@ namespace RVTR.Lodging.ObjectModel.Models
     public int Bathrooms { get; set; }
 
     /// <summary>
+    /// List of the lodging's image uris
+    /// </summary>
+    public IEnumerable<ImageModel> Images { get; set; } = new List<ImageModel>();
+
+
+    /// <summary>
     /// Rental list of the lodging
     /// </summary>
     /// <value></value>

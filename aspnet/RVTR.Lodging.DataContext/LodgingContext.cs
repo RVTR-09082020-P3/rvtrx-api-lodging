@@ -54,11 +54,56 @@ namespace RVTR.Lodging.DataContext
 
       modelBuilder.Entity<LodgingModel>().HasData(new List<LodgingModel>()
       {
-        new LodgingModel() { Id = 1, LocationId = 1, Name = "Dragon Fly", Bathrooms = 2 },
-        new LodgingModel() { Id = 2, LocationId = 2, Name = "Galleywinter", Bathrooms = 3 },
-        new LodgingModel() { Id = 3, LocationId = 3, Name = "Red Creek", Bathrooms = 5 },
-        new LodgingModel() { Id = 4, LocationId = 4, Name = "Lotus Belle", Bathrooms = 6 },
+        new LodgingModel() { Id = 1, LocationId = 1, Name = "Dragon Fly", Bathrooms = 2,
+          Images = new List<ImageModel>(){
+            new ImageModel() { ImageUri = "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"},
+            new ImageModel() { ImageUri = "https://3.bp.blogspot.com/-ha7tdQrX-NU/WW8YoM1EqwI/AAAAAAAAGXo/-8t35xR6DmsvhSQmuufNy020Jarn9FZYQCHMYBhgL/s1600/pc-nature-wallpapers-cnsoup-collections.jpg"},
+            new ImageModel() { ImageUri = "https://swall.teahub.io/photos/small/323-3236437_nature-wallpaper-pc-4k.jpg"},
+            new ImageModel() { ImageUri = "https://w.wallhaven.cc/full/md/wallhaven-md5do1.jpg"},
+            new ImageModel() { ImageUri = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRQPXqYYN-xTlO2yPaNK8b1GW3m4kQlbKkRhA&usqp=CAU"},
+            new ImageModel() { ImageUri = "https://t4.ftcdn.net/jpg/02/91/24/27/360_F_291242770_z3XC7rJB1Mvc5jVMsEY9Dx2xMrX4sxUi.jpg"},
+            new ImageModel() { ImageUri = "https://croatia.hr/sites/default/files/styles/image_full_width/public/2020-01/Plitvice-Lakes-National-Park_shutterstock_454592293_1600x900.jpg?itok=xwQuMGjg"},
+          }
+        },
+
+        new LodgingModel() { Id = 2, LocationId = 2, Name = "Galleywinter", Bathrooms = 3,
+          Images = new List<ImageModel>(){
+            new ImageModel() { ImageUri = "https://www.nps.gov/lacl/learn/nature/images/LACL_2017_Entering-the-Neacolas-from-Big-Valley_LWilcox.JPG"},
+            new ImageModel() { ImageUri = "https://media.nationalgeographic.org/assets/photos/201/399/978429cd-0d04-464b-a3c1-473e163ecc5b.jpg"},
+            new ImageModel() { ImageUri = "https://res.cloudinary.com/dk-find-out/image/upload/q_80,w_1920,f_auto/Tundra_Scene1_okuw9s.jpg"},
+            new ImageModel() { ImageUri = "https://www.thoughtco.com/thmb/BCx7nDQlalfdT1iXhSeL01Ha454=/1333x1000/smart/filters:no_upscale()/92292471-56a005035f9b58eba4ae83e0.jpg"},
+            new ImageModel() { ImageUri = "https://upload.wikimedia.org/wikipedia/commons/a/ac/Nunavut_tundra_-c.jpg"},
+            new ImageModel() { ImageUri = "https://nhpbs.org/wild/images/muskoxusfwtimBowman.jpg"},
+            new ImageModel() { ImageUri = "https://images.fineartamerica.com/images-medium-large-5/3-bull-caribou-on-autumn-tundra-in-denali-milo-burcham.jpg"},
+          }
+        },
+
+        new LodgingModel() { Id = 3, LocationId = 3, Name = "Red Creek", Bathrooms = 5,
+          Images = new List<ImageModel>(){
+            new ImageModel() { ImageUri = "https://eskipaper.com/images/awesome-jungle-wallpaper-2.jpg"},
+            new ImageModel() { ImageUri = "https://images.unsplash.com/photo-1588392382834-a891154bca4d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"},
+            new ImageModel() { ImageUri = "https://wallpapermemory.com/uploads/274/jungle-wallpaper-hd-1120x832-447114.jpg"},
+            new ImageModel() { ImageUri = "https://images.alphacoders.com/708/thumb-1920-708947.jpg"},
+            new ImageModel() { ImageUri = "https://www.worldwalks.com/wp-content/uploads/2018/12/Amazon_870-870x480.jpg"},
+            new ImageModel() { ImageUri = "https://www.goodnewsnetwork.org/wp-content/uploads/2014/06/Potaro-river-Kaieteur-falls-Amazon-cc-Allan_Hopkins.jpg"},
+            new ImageModel() { ImageUri = "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F28%2F2020%2F06%2F18%2Folympia-national-park-hoh-campground-NPCAMP0620.jpg"},
+          }
+        },
+
+        new LodgingModel() { Id = 4, LocationId = 4, Name = "Lotus Belle", Bathrooms = 6,
+          Images = new List<ImageModel>(){
+            new ImageModel() { ImageUri = "https://cdn.mos.cms.futurecdn.net/deaceNXy23NF8VsCrwZPgn.jpg"},
+            new ImageModel() { ImageUri = "https://geographical.co.uk/media/k2/items/cache/a74a4e8d02982a465da28ab5257d0d4d_XL.jpg"},
+            new ImageModel() { ImageUri = "https://i.pinimg.com/originals/e5/cc/49/e5cc49acade6f109f241e8206ade70f0.jpg"},
+            new ImageModel() { ImageUri = "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/colorful-sunset-in-the-desert-anton-petrus.jpg"},
+            new ImageModel() { ImageUri = "https://www.turbopass.com/3843-carousel/desert-sunset-experience.jpg"},
+            new ImageModel() { ImageUri = "https://www.kcet.org/sites/kl/files/atoms/article_atoms/www.kcet.org/living/travel/socal_wanderer/jumbo-rocks-campground-joshua-tree.jpeg"},
+            new ImageModel() { ImageUri = "https://upload.wikimedia.org/wikipedia/commons/6/67/Desert_Fox_Pups.jpg"},
+          }
+        },
       });
+
+      
 
       modelBuilder.Entity<RentalModel>().HasData(new List<RentalModel>()
       {
