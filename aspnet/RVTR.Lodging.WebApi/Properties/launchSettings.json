@@ -13,7 +13,8 @@
       "launchBrowser": true,
       "launchUrl": "rest/lodging",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AZURE_USERNAME": "joshuawilliam948@gmail.com"
       }
     },
     "RVTR.Lodging.WebApi": {
@@ -22,7 +23,8 @@
       "launchUrl": "rest/lodging",
       "applicationUrl": "http://localhost:8002",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AZURE_USERNAME": "joshuawilliam948@gmail.com"
       }
     }
   }

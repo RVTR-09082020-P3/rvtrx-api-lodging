@@ -12,6 +12,11 @@ using RVTR.Lodging.DataContext.Repositories;
 using RVTR.Lodging.ObjectModel.Interfaces;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using zipkin4net.Middleware;
+using Microsoft.Extensions.Azure;
+using Azure.Storage.Queues;
+using Azure.Storage.Blobs;
+using Azure.Core.Extensions;
+using System;
 
 namespace RVTR.Lodging.WebApi
 {
@@ -20,10 +25,11 @@ namespace RVTR.Lodging.WebApi
   /// </summary>
   public class Startup
   {
-    /// <summary>
-    ///
-    /// </summary>
-    private readonly IConfiguration _configuration;
+        public IConfiguration Configuration { get; }
+        /// <summary>
+        ///
+        /// </summary>
+        private readonly IConfiguration _configuration;
 
     /// <summary>
     ///
@@ -75,8 +81,13 @@ namespace RVTR.Lodging.WebApi
         options.GroupNameFormat = "VV";
         options.SubstituteApiVersionInUrl = true;
       });
+            services.AddAzureClients(builder =>
+            {
+                builder.AddBlobServiceClient(Configuration["ConnectionStrings:BlobStorage:blob"], preferMsi: true);
+                builder.AddQueueServiceClient(Configuration["ConnectionStrings:BlobStorage:queue"], preferMsi: true);
+            });
 
-    }
+        }
 
     /// <summary>
     ///
@@ -116,4 +127,29 @@ namespace RVTR.Lodging.WebApi
       });
     }
   }
+    internal static class StartupExtensions
+    {
+        public static IAzureClientBuilder<BlobServiceClient, BlobClientOptions> AddBlobServiceClient(this AzureClientFactoryBuilder builder, string serviceUriOrConnectionString, bool preferMsi)
+        {
+            if (preferMsi && Uri.TryCreate(serviceUriOrConnectionString, UriKind.Absolute, out Uri serviceUri))
+            {
+                return builder.AddBlobServiceClient(serviceUri);
+            }
+            else
+            {
+                return builder.AddBlobServiceClient(serviceUriOrConnectionString);
+            }
+        }
+        public static IAzureClientBuilder<QueueServiceClient, QueueClientOptions> AddQueueServiceClient(this AzureClientFactoryBuilder builder, string serviceUriOrConnectionString, bool preferMsi)
+        {
+            if (preferMsi && Uri.TryCreate(serviceUriOrConnectionString, UriKind.Absolute, out Uri serviceUri))
+            {
+                return builder.AddQueueServiceClient(serviceUri);
+            }
+            else
+            {
+                return builder.AddQueueServiceClient(serviceUriOrConnectionString);
+            }
+        }
+    }
 }

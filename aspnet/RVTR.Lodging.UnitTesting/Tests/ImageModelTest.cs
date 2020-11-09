@@ -15,7 +15,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
       {
         new ImageModel
         {
-          imageId = 1,
+          Id = 1,
           lodgingId = 1,
           imageUrl = "https://www.cbc.ca/parents/content/imgs/weird-kids-youtube.jpg",
         }
@@ -23,7 +23,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
     };
 
     /// <summary>
-    ///test data for validate of validation to image model table validationing
+    ///Data validation on the creation of an imagemodel object
     /// </summary>
     /// <param name="image"></param>
     [Theory]
@@ -37,7 +37,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
     }
 
     /// <summary>
-    ///Doing validation to image model validating work of the validationing validater in the validator 
+    ///Validating the image model objects in the db context 
     /// </summary>
     /// <param name="images"></param>
     [Theory]

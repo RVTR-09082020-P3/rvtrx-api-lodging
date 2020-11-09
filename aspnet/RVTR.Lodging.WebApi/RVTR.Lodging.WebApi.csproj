@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <DebugType>Full</DebugType>
@@ -8,12 +8,17 @@
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Version>0.5.0</Version>
+    <UserSecretsId>e65fa517-daee-449e-b587-2a3c080a96f3</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.6.0" />
+    <PackageReference Include="Azure.Storage.Files.Shares" Version="12.1.0" />
+    <PackageReference Include="Azure.Storage.Queues" Version="12.2.0" />
     <PackageReference Include="microsoft.aspnetcore.mvc.newtonsoftjson" Version="3.1.9" />
     <PackageReference Include="microsoft.aspnetcore.mvc.versioning" Version="4.1.1" />
     <PackageReference Include="microsoft.aspnetcore.mvc.versioning.apiexplorer" Version="4.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Azure" Version="1.0.0" />
     <PackageReference Include="npgsql.entityframeworkcore.postgresql" Version="3.1.4" />
     <PackageReference Include="swashbuckle.aspnetcore" Version="5.6.3" />
     <PackageReference Include="zipkin4net" Version="1.5.0" />

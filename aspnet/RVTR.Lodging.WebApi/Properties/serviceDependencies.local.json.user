@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "storage1": {
+      "restored": true,
+      "restoreTime": "2020-11-04T17:56:31.9520011Z"
+    },
+    "secrets1": {
+      "restored": true,
+      "restoreTime": "2020-11-04T17:56:10.7559244Z"
+    }
+  },
+  "parameters": {
+    "storage1.resourceGroupName": {
+      "Type": "resourceGroup",
+      "Value": "rvtrp3"
+    },
+    "storage1.subscriptionId": {
+      "Type": "subscription",
+      "Value": "fc4facbc-a810-4cd7-bb2f-cdff9d9d1ede"
+    },
+    "subscriptionId": {
+      "Type": "subscription",
+      "Value": "fc4facbc-a810-4cd7-bb2f-cdff9d9d1ede"
+    },
+    "storage1.resourceGroupLocation": {
+      "Type": "location",
+      "Value": "eastus"
+    }
+  }
+}

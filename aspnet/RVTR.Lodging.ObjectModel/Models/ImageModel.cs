@@ -8,7 +8,7 @@ namespace RVTR.Lodging.ObjectModel.Models
         /// <summary>
         /// The public key Id for each image url 
         /// </summary>
-        public int imageId { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// The id of the lodging the image url belongs to 
